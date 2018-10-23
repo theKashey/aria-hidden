@@ -1,5 +1,7 @@
 aria-hidden
 ====
+[![NPM](https://nodei.co/npm/aria-hidden.png?downloads=true&stars=true)](https://nodei.co/npm/aria-hidden/)
+
 Hides from ARIA everything, except provided node.
 Helps to isolate modal dialogs and focused task - the content will be not accessible using
 accesible tools.
