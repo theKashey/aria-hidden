@@ -29,10 +29,18 @@
   "files": [
     "dist"
   ],
-  "keywords": ["DOM", "aria", "hidden", "inert"],
+  "keywords": [
+    "DOM",
+    "aria",
+    "hidden",
+    "inert"
+  ],
   "homepage": "https://github.com/theKashey/aria-hidden#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/theKashey/aria-hidden.git"
+  },
+  "dependencies": {
+    "tslib": "^1.0.0"
   }
 }

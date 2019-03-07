@@ -2,37 +2,84 @@ export type Undo = () => void;
 
 const defaultParent = typeof document !== 'undefined' ? document.body : null;
 
-export const hideOthers = (target: HTMLElement, parentNode = defaultParent): Undo => {
-  const originalValues = new Map();
+let counterMap = new WeakMap<HTMLElement, number>();
+let uncontrolledNodes = new WeakMap<HTMLElement, boolean>();
+let markerMap: Record<string, WeakMap<HTMLElement, number>> = {};
+let lockCount = 0;
+
+export const hideOthers = (originalTarget: HTMLElement | HTMLElement[], parentNode = defaultParent, markerName = "data-aria-hidden"): Undo => {
+  const targets = Array.isArray(originalTarget) ? originalTarget : [originalTarget];
+
+  if (!markerMap[markerName]) {
+    markerMap[markerName] = new WeakMap();
+  }
+  const markerCounter = markerMap[markerName];
+  const hiddenNodes: HTMLElement[] = [];
 
   const deep = (parent: HTMLElement | null) => {
     if (!parent || parent === target) {
       return;
     }
+
     Array.prototype.forEach.call(parent.children, (node: HTMLElement) => {
-      if (node.contains(target)) {
+      if (targets.some(target => node.contains(target))) {
         deep(node);
       } else {
         const attr = node.getAttribute('aria-hidden');
         const alreadyHidden = attr !== null && attr !== 'false';
-        if (alreadyHidden) {
-          return
+        const counterValue = (counterMap.get(node) || 0) + 1;
+        const markerValue = (markerCounter.get(node) || 0) + 1;
+
+        counterMap.set(node, counterValue);
+        markerCounter.set(node, markerValue);
+        hiddenNodes.push(node);
+
+        if (counterValue === 1 && alreadyHidden) {
+          uncontrolledNodes.set(node, true);
         }
-        originalValues.set(node, attr);
-        node.setAttribute('aria-hidden', 'true')
+
+        if (markerValue === 1) {
+          node.setAttribute(markerName, 'true');
+        }
+
+        if (!alreadyHidden) {
+          node.setAttribute('aria-hidden', 'true')
+        }
       }
     })
   };
 
   deep(parentNode);
 
+  lockCount++;
+
   return () => {
-    originalValues.forEach((hiddenAttr, node) => {
-      if (hiddenAttr === null) {
-        node.removeAttribute('aria-hidden')
-      } else {
-        node.setAttribute('aria-hidden', hiddenAttr)
+    hiddenNodes.forEach(node => {
+      const counterValue = counterMap.get(node) - 1;
+      const markerValue = markerCounter.get(node) - 1;
+
+      counterMap.set(node, counterValue);
+      markerCounter.set(node, markerValue);
+
+      if (!counterValue) {
+        if (!uncontrolledNodes.has(node)) {
+          node.removeAttribute('aria-hidden')
+        }
+        uncontrolledNodes.delete(node)
       }
-    })
+
+      if (!markerValue) {
+        node.removeAttribute(markerName);
+      }
+    });
+
+    lockCount--;
+    if (!lockCount) {
+      // clear
+      counterMap = new WeakMap();
+      counterMap = new WeakMap();
+      uncontrolledNodes = new WeakMap();
+      markerMap = {};
+    }
   }
 };
