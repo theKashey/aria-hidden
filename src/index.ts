@@ -17,7 +17,7 @@ export const hideOthers = (originalTarget: HTMLElement | HTMLElement[], parentNo
   const hiddenNodes: HTMLElement[] = [];
 
   const deep = (parent: HTMLElement | null) => {
-    if (!parent || parent === target) {
+    if (!parent || targets.indexOf(parent) >= 0) {
       return;
     }
 
