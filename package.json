@@ -19,7 +19,7 @@
   "author": "Anton Korzunov <thekashey@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "ts-react-toolbox": "^0.1.22"
+    "ts-react-toolbox": "^1.1.1"
   },
   "engines": {
     "node": ">=8.5.0"
@@ -42,6 +42,6 @@
     "url": "git+https://github.com/theKashey/aria-hidden.git"
   },
   "dependencies": {
-    "tslib": "^1.0.0"
+    "tslib": "^2.0.3"
   }
 }
