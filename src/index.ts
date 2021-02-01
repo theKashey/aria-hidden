@@ -1,13 +1,20 @@
 export type Undo = () => void;
 
-const defaultParent = typeof document !== 'undefined' ? document.body : null;
+const getDefaultParent = (originalTarget: HTMLElement | HTMLElement[]) => {
+  if (typeof document === 'undefined') {
+    return null;
+  }
+
+  const sampleTarget = Array.isArray(originalTarget) ? originalTarget[0] : originalTarget;
+  return sampleTarget.ownerDocument.body;
+};
 
 let counterMap = new WeakMap<HTMLElement, number>();
 let uncontrolledNodes = new WeakMap<HTMLElement, boolean>();
 let markerMap: Record<string, WeakMap<HTMLElement, number>> = {};
 let lockCount = 0;
 
-export const hideOthers = (originalTarget: HTMLElement | HTMLElement[], parentNode = defaultParent, markerName = "data-aria-hidden"): Undo => {
+export const hideOthers = (originalTarget: HTMLElement | HTMLElement[], parentNode = getDefaultParent(originalTarget), markerName = "data-aria-hidden"): Undo => {
   const targets = Array.isArray(originalTarget) ? originalTarget : [originalTarget];
 
   if (!markerMap[markerName]) {
