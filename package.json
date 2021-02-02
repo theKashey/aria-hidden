@@ -1,6 +1,6 @@
 {
   "name": "aria-hidden",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Cast aria-hidden to everything, except...",
   "main": "dist/es5/index.js",
   "scripts": {
