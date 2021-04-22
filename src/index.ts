@@ -29,7 +29,7 @@ export const hideOthers = (originalTarget: HTMLElement | HTMLElement[], parentNo
     }
 
     Array.prototype.forEach.call(parent.children, (node: HTMLElement) => {
-      if (targets.some(target => node.contains(target))) {
+      if (targets.some(target => 'contains' in node && node.contains(target))) {
         deep(node);
       } else {
         const attr = node.getAttribute('aria-hidden');
