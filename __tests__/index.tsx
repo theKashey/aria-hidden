@@ -17,6 +17,9 @@ describe('Specs', () => {
             <div ref={target2}>not me 3</div>
           </div>
           <div ref={targetOutside1}>hide me 4</div>
+          <svg>
+            <text>svg</text>
+          </svg>
           <div aria-hidden>I am already hidden! 5</div>
         </div>
         <div>dont touch me 6</div>
@@ -128,5 +131,23 @@ describe('Specs', () => {
     unhide2();
 
     expect(wrapper.html()).toEqual(base)
+  });
+  it('works on IE11', () => {
+    // Simulate IE11 DOM Node implementation.
+    HTMLElement.prototype.contains = Node.prototype.contains;
+    delete Node.prototype.contains;
+    const {
+      base, parent, target1, target2, targetOutside1, wrapper
+    } = factory();
+
+    const unhide = hideOthers(target1.current, parent.current);
+    expect(wrapper.update().html()).toMatchSnapshot();
+
+    expect(getNearestAttribute(target1.current, 'aria-hidden', parent)).toBe(null);
+    expect(getNearestAttribute(target2.current, 'aria-hidden', parent)).toBe("true");
+    expect(getNearestAttribute(targetOutside1.current, 'aria-hidden', parent)).toBe("true");
+
+    unhide();
+    expect(wrapper.html()).toEqual(base);
   });
 });
