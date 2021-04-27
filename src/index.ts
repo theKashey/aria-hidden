@@ -1,6 +1,6 @@
 export type Undo = () => void;
 
-const getDefaultParent = (originalTarget: HTMLElement | HTMLElement[]) => {
+const getDefaultParent = (originalTarget: Element | Element[]) => {
   if (typeof document === 'undefined') {
     return null;
   }
@@ -9,27 +9,27 @@ const getDefaultParent = (originalTarget: HTMLElement | HTMLElement[]) => {
   return sampleTarget.ownerDocument.body;
 };
 
-let counterMap = new WeakMap<HTMLElement, number>();
-let uncontrolledNodes = new WeakMap<HTMLElement, boolean>();
-let markerMap: Record<string, WeakMap<HTMLElement, number>> = {};
+let counterMap = new WeakMap<Element, number>();
+let uncontrolledNodes = new WeakMap<Element, boolean>();
+let markerMap: Record<string, WeakMap<Element, number>> = {};
 let lockCount = 0;
 
-export const hideOthers = (originalTarget: HTMLElement | HTMLElement[], parentNode = getDefaultParent(originalTarget), markerName = "data-aria-hidden"): Undo => {
+export const hideOthers = (originalTarget: Element | Element[], parentNode = getDefaultParent(originalTarget), markerName = "data-aria-hidden"): Undo => {
   const targets = Array.isArray(originalTarget) ? originalTarget : [originalTarget];
 
   if (!markerMap[markerName]) {
     markerMap[markerName] = new WeakMap();
   }
   const markerCounter = markerMap[markerName];
-  const hiddenNodes: HTMLElement[] = [];
+  const hiddenNodes: Element[] = [];
 
-  const deep = (parent: HTMLElement | null) => {
+  const deep = (parent: Element | null) => {
     if (!parent || targets.indexOf(parent) >= 0) {
       return;
     }
 
-    Array.prototype.forEach.call(parent.children, (node: HTMLElement) => {
-      if (targets.some(target => node.contains(target))) {
+    Array.prototype.forEach.call(parent.children, (node: Element) => {
+      if (targets.some(target => 'contains' in node && node.contains(target))) {
         deep(node);
       } else {
         const attr = node.getAttribute('aria-hidden');
