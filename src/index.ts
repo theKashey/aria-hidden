@@ -14,6 +14,12 @@ let uncontrolledNodes = new WeakMap<Element, boolean>();
 let markerMap: Record<string, WeakMap<Element, number>> = {};
 let lockCount = 0;
 
+/**
+ * Marks everything except given node(pr nodes) as aria-hidden
+ * @param {Element | Element[]} originalTarget - elements to keep on the page
+ * @param parentNode - top element, defaults to document.body
+ * @return {Undo} undo command
+ */
 export const hideOthers = (originalTarget: Element | Element[], parentNode = getDefaultParent(originalTarget), markerName = "data-aria-hidden"): Undo => {
   const targets = Array.isArray(originalTarget) ? originalTarget : [originalTarget];
 
