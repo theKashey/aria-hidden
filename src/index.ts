@@ -73,6 +73,7 @@ export const hideOthers = (originalTarget: Element | Element[], parentNode = get
   };
 
   deep(parentNode);
+  elementsToKeep.clear();
 
   lockCount++;
 
