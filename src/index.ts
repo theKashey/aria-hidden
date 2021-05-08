@@ -29,13 +29,23 @@ export const hideOthers = (originalTarget: Element | Element[], parentNode = get
   const markerCounter = markerMap[markerName];
   const hiddenNodes: Element[] = [];
 
+  const elementsToKeep = new Set<Node>();
+  const keep = ((el:Node | undefined) =>{
+    if(!el || elementsToKeep.has(el)){
+      return;
+    }
+    elementsToKeep.add(el);
+    keep(el.parentNode);
+  });
+  targets.forEach(keep)
+
   const deep = (parent: Element | null) => {
     if (!parent || targets.indexOf(parent) >= 0) {
       return;
     }
 
     Array.prototype.forEach.call(parent.children, (node: Element) => {
-      if (targets.some(target => 'contains' in node && node.contains(target))) {
+      if (elementsToKeep.has(node)) {
         deep(node);
       } else {
         const attr = node.getAttribute('aria-hidden');
