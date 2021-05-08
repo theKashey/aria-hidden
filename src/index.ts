@@ -14,6 +14,12 @@ let uncontrolledNodes = new WeakMap<Element, boolean>();
 let markerMap: Record<string, WeakMap<Element, number>> = {};
 let lockCount = 0;
 
+/**
+ * Marks everything except given node(or nodes) as aria-hidden
+ * @param {Element | Element[]} originalTarget - elements to keep on the page
+ * @param parentNode - top element, defaults to document.body
+ * @return {Undo} undo command
+ */
 export const hideOthers = (originalTarget: Element | Element[], parentNode = getDefaultParent(originalTarget), markerName = "data-aria-hidden"): Undo => {
   const targets = Array.isArray(originalTarget) ? originalTarget : [originalTarget];
 
@@ -23,13 +29,23 @@ export const hideOthers = (originalTarget: Element | Element[], parentNode = get
   const markerCounter = markerMap[markerName];
   const hiddenNodes: Element[] = [];
 
+  const elementsToKeep = new Set<Node>();
+  const keep = ((el:Node | undefined) =>{
+    if(!el || elementsToKeep.has(el)){
+      return;
+    }
+    elementsToKeep.add(el);
+    keep(el.parentNode);
+  });
+  targets.forEach(keep)
+
   const deep = (parent: Element | null) => {
     if (!parent || targets.indexOf(parent) >= 0) {
       return;
     }
 
     Array.prototype.forEach.call(parent.children, (node: Element) => {
-      if (targets.some(target => 'contains' in node && node.contains(target))) {
+      if (elementsToKeep.has(node)) {
         deep(node);
       } else {
         const attr = node.getAttribute('aria-hidden');
@@ -57,6 +73,7 @@ export const hideOthers = (originalTarget: Element | Element[], parentNode = get
   };
 
   deep(parentNode);
+  elementsToKeep.clear();
 
   lockCount++;
 
