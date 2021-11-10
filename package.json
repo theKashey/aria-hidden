@@ -17,7 +17,7 @@
     "analyze": "ts-react-toolbox analyze"
   },
   "author": "Anton Korzunov <thekashey@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "ts-react-toolbox": "^0.1.22"
   },
