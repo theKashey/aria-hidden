@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Specs handles aria-live 1`] = `"<div><div><div><div>kept</div><div>hidden</div><div aria-live=\\"polite\\">not-hidden life</div><div aria-live=\\"off\\">hidden life</div></div><div>not-hidden</div></div></div>"`;
-
 exports[`Specs hides cross 1`] = `"<div><div><div data-aria-hidden=\\"true\\" aria-hidden=\\"true\\">hide me 1</div><div>not me 2</div><div data-aria-hidden=\\"true\\" aria-hidden=\\"true\\"><div>not me 3</div></div><div data-aria-hidden=\\"true\\" aria-hidden=\\"true\\">hide me 4</div><svg data-aria-hidden=\\"true\\" aria-hidden=\\"true\\"><text>svg</text></svg><div aria-hidden=\\"true\\" data-aria-hidden=\\"true\\">I am already hidden! 5</div></div><div>dont touch me 6</div></div>"`;
 
 exports[`Specs hides cross 2`] = `"<div><div><div data-aria-hidden=\\"true\\" aria-hidden=\\"true\\">hide me 1</div><div data-aria-hidden=\\"true\\" aria-hidden=\\"true\\">not me 2</div><div data-aria-hidden=\\"true\\" aria-hidden=\\"true\\"><div>not me 3</div></div><div data-aria-hidden=\\"true\\" aria-hidden=\\"true\\">hide me 4</div><svg data-aria-hidden=\\"true\\" aria-hidden=\\"true\\"><text>svg</text></svg><div aria-hidden=\\"true\\" data-aria-hidden=\\"true\\">I am already hidden! 5</div></div><div>dont touch me 6</div></div>"`;

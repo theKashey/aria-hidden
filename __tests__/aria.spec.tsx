@@ -1,9 +1,8 @@
 import { render } from '@testing-library/react';
 import * as React from 'react';
 
-import { RefObject } from 'react';
-
 import { hideOthers } from '../src';
+import { getNearestAttribute } from './utils';
 
 describe('Specs', () => {
   const factory = () => {
@@ -41,20 +40,6 @@ describe('Specs', () => {
       target2,
       targetOutside1,
     };
-  };
-
-  const getNearestAttribute = (node: Element, name: string, parent: RefObject<Element>): any => {
-    const attr = node.getAttribute(name);
-
-    if (attr) {
-      return attr;
-    }
-
-    if (node === parent.current || !node.parentNode) {
-      return null;
-    }
-
-    return getNearestAttribute(node.parentNode as any, name, parent);
   };
 
   it('hides single', () => {
@@ -157,7 +142,7 @@ describe('Specs', () => {
     expect(getNearestAttribute(root.querySelector('#to-be-hidden')!, 'aria-hidden', { current: root })).toBe('true');
 
     expect(wrapper.baseElement.innerHTML).toMatchInlineSnapshot(
-        `"<div><div><div><div id=\\"to-be-hidden\\" data-aria-hidden=\\"true\\" aria-hidden=\\"true\\">hidden</div><div aria-live=\\"polite\\">not-hidden life</div><div aria-live=\\"off\\">hidden life</div></div><div>not-hidden</div></div></div>"`
+      `"<div><div><div><div id=\\"to-be-hidden\\" data-aria-hidden=\\"true\\" aria-hidden=\\"true\\">hidden</div><div aria-live=\\"polite\\">not-hidden life</div><div aria-live=\\"off\\">hidden life</div></div><div>not-hidden</div></div></div>"`
     );
 
     unhide();
