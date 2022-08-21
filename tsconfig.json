@@ -23,7 +23,4 @@
     ],
     "jsx": "react"
   },
-  "files": [
-    "./custom-typings/atlaskit.d.ts"
-  ]
 }
