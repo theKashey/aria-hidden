@@ -132,7 +132,7 @@ const applyAttributeToOthers = (
  */
 export const hideOthers = (
   originalTarget: Element | Element[],
-  parentNode: HTMLElement | undefined,
+  parentNode?: HTMLElement,
   markerName = 'data-aria-hidden'
 ): Undo => {
   const targets = Array.from(Array.isArray(originalTarget) ? originalTarget : [originalTarget]);
@@ -157,7 +157,7 @@ export const hideOthers = (
  */
 export const inertOthers = (
   originalTarget: Element | Element[],
-  parentNode: HTMLElement | undefined,
+  parentNode?: HTMLElement,
   markerName = 'data-inert-ed'
 ): Undo => {
   const activeParentNode = parentNode || getDefaultParent(originalTarget);
@@ -184,6 +184,6 @@ export const supportsInert = (): boolean =>
  */
 export const suppressOthers = (
   originalTarget: Element | Element[],
-  parentNode: HTMLElement | undefined,
+  parentNode?: HTMLElement,
   markerName = 'data-suppressed'
 ): Undo => (supportsInert() ? inertOthers : hideOthers)(originalTarget, parentNode, markerName);
