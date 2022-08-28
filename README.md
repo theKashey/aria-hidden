@@ -59,6 +59,27 @@ import { suppressOthers } from 'aria-hidden';
 suppressOthers([keepThisNode, andThis]);
 ```
 
+⚠️ Note - inert **will disable any interactions** with _suppressed_ elements ⚠️
+
+### Suppressing interactivity without inert
+
+One can `marker`, the third argument to a function, to mark hidden elements.
+Later one can create a style matching given marker to apply `pointer-events:none`
+
+```css
+[hidden-node] {
+  pointer-events: none;
+}
+```
+
+```tsx
+hideOthers(notThisOne, undefined /*parent = document*/, 'hidden-node');
+```
+
+Generally speaking the same can be archived by addressing `[aria-hidden]` nodes, but
+not all `aria-hidden` nodes are expected to be non-interactive.
+Hence, it's better to separate concerns.
+
 # Inspiration
 
 Based on [smooth-ui](https://github.com/smooth-code/smooth-ui) modal dialogs.
