@@ -76,7 +76,7 @@ Later one can create a style matching given marker to apply `pointer-events:none
 hideOthers(notThisOne, undefined /*parent = document*/, 'hidden-node');
 ```
 
-Generally speaking the same can be archived by addressing `[aria-hidden]` nodes, but
+Generally speaking the same can be achieved by addressing `[aria-hidden]` nodes, but
 not all `aria-hidden` nodes are expected to be non-interactive.
 Hence, it's better to separate concerns.
 
