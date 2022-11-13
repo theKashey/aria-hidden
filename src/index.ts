@@ -15,6 +15,28 @@ let uncontrolledNodes = new WeakMap<Element, boolean>();
 let markerMap: Record<string, WeakMap<Element, number>> = {};
 let lockCount = 0;
 
+const unwrapHost = (node: Element | ShadowRoot): Element | null =>
+  node && ((node as ShadowRoot).host || unwrapHost(node.parentNode as Element));
+
+const correctTargets = (parent: HTMLElement, targets: Element[]): Element[] =>
+  targets
+    .map((target) => {
+      if (parent.contains(target)) {
+        return target;
+      }
+
+      const correctedTarget = unwrapHost(target);
+
+      if (correctedTarget && parent.contains(correctedTarget)) {
+        return correctedTarget;
+      }
+
+      console.error('aria-hidden', target, 'in not contained inside', parent, '. Doing nothing');
+
+      return null;
+    })
+    .filter((x): x is Element => Boolean(x));
+
 /**
  * Marks everything except given node(or nodes) as aria-hidden
  * @param {Element | Element[]} originalTarget - elements to keep on the page
@@ -29,7 +51,7 @@ const applyAttributeToOthers = (
   markerName: string,
   controlAttribute: string
 ): Undo => {
-  const targets = Array.isArray(originalTarget) ? originalTarget : [originalTarget];
+  const targets = correctTargets(parentNode, Array.isArray(originalTarget) ? originalTarget : [originalTarget]);
 
   if (!markerMap[markerName]) {
     markerMap[markerName] = new WeakMap();
