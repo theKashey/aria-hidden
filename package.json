@@ -13,7 +13,6 @@
     "release": "yarn build && yarn test",
     "lint": "lib-builder lint",
     "format": "lib-builder format",
-    "analyze": "ts-react-toolbox analyze",
     "size": "npx size-limit",
     "size:report": "npx size-limit --json > .size.json",
     "update": "lib-builder update",
@@ -52,15 +51,6 @@
     "tslib": "^2.0.0"
   },
   "module:es2019": "dist/es2019/index.js",
-  "peerDependencies": {
-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "@types/react": "^16.9.0 || ^17.0.0 || ^18.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@types/react": {
-      "optional": true
-    }
-  },
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write",
