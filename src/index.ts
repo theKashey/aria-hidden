@@ -83,25 +83,29 @@ const applyAttributeToOthers = (
       if (elementsToKeep.has(node)) {
         deep(node);
       } else {
-        const attr = node.getAttribute(controlAttribute);
-        const alreadyHidden = attr !== null && attr !== 'false';
-        const counterValue = (counterMap.get(node) || 0) + 1;
-        const markerValue = (markerCounter.get(node) || 0) + 1;
+        try {
+          const attr = node.getAttribute(controlAttribute);
+          const alreadyHidden = attr !== null && attr !== 'false';
+          const counterValue = (counterMap.get(node) || 0) + 1;
+          const markerValue = (markerCounter.get(node) || 0) + 1;
 
-        counterMap.set(node, counterValue);
-        markerCounter.set(node, markerValue);
-        hiddenNodes.push(node);
+          counterMap.set(node, counterValue);
+          markerCounter.set(node, markerValue);
+          hiddenNodes.push(node);
 
-        if (counterValue === 1 && alreadyHidden) {
-          uncontrolledNodes.set(node, true);
-        }
+          if (counterValue === 1 && alreadyHidden) {
+            uncontrolledNodes.set(node, true);
+          }
 
-        if (markerValue === 1) {
-          node.setAttribute(markerName, 'true');
-        }
+          if (markerValue === 1) {
+            node.setAttribute(markerName, 'true');
+          }
 
-        if (!alreadyHidden) {
-          node.setAttribute(controlAttribute, 'true');
+          if (!alreadyHidden) {
+            node.setAttribute(controlAttribute, 'true');
+          }
+        } catch (e) {
+          console.error('aria-hidden: cannot operate on ', node, e);
         }
       }
     });
