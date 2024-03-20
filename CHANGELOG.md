@@ -1,3 +1,21 @@
+## [1.2.4](https://github.com/theKashey/aria-hidden/compare/v1.2.3...v1.2.4) (2024-03-20)
+
+### Bug Fixes
+
+- secure operation to prevent failures in FF, fixes [#18](https://github.com/theKashey/aria-hidden/issues/18) ([25d6c66](https://github.com/theKashey/aria-hidden/commit/25d6c66ccc5ffd7f220f3b227d4bf0c42760fd80))
+
+## [1.2.3](https://github.com/theKashey/aria-hidden/compare/v1.2.2...v1.2.3) (2023-03-04)
+
+### Bug Fixes
+
+- drop react as peer dependency ([11f4cea](https://github.com/theKashey/aria-hidden/commit/11f4cea060b0c7ff3f603952590d649f54a5b777))
+
+## [1.2.2](https://github.com/theKashey/aria-hidden/compare/v1.2.1...v1.2.2) (2022-11-13)
+
+### Bug Fixes
+
+- support shadow-dom. Fixes [#14](https://github.com/theKashey/aria-hidden/issues/14) ([3dd2b66](https://github.com/theKashey/aria-hidden/commit/3dd2b665330362366a6712553097aec564398400))
+
 ## [1.2.1](https://github.com/theKashey/aria-hidden/compare/v1.2.0...v1.2.1) (2022-08-23)
 
 # [1.2.0](https://github.com/theKashey/aria-hidden/compare/v1.1.3...v1.2.0) (2022-08-21)
