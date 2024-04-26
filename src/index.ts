@@ -10,8 +10,8 @@ const getDefaultParent = (originalTarget: Element | Element[]): HTMLElement | nu
   return sampleTarget.ownerDocument.body;
 };
 
-let counterMap = new WeakMap<Element, number>();
-let uncontrolledNodes = new WeakMap<Element, boolean>();
+let counterMap: WeakMap<Element, number> = new WeakMap<Element, number>();
+let uncontrolledNodes: WeakMap<Element, boolean> = new WeakMap<Element, boolean>();
 let markerMap: Record<string, WeakMap<Element, number>> = {};
 let lockCount = 0;
 
