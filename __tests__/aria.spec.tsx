@@ -148,6 +148,30 @@ describe('Specs', () => {
     unhide();
   });
 
+  it('handles script', () => {
+    const wrapper = render(
+      <div>
+        <div>
+          <div id="to-be-hidden">hidden</div>
+          <script></script>
+        </div>
+        <div>not-hidden</div>
+      </div>
+    );
+    const root = wrapper.baseElement.firstElementChild!;
+
+    const unhide = hideOthers(root.firstElementChild!.lastElementChild!, root as any);
+
+    expect(getNearestAttribute(root.querySelector('script')!, 'aria-hidden', { current: root })).toBe(null);
+    expect(getNearestAttribute(root.querySelector('#to-be-hidden')!, 'aria-hidden', { current: root })).toBe('true');
+
+    expect(wrapper.baseElement.innerHTML).toMatchInlineSnapshot(
+      `"<div><div><div><div id=\\"to-be-hidden\\" data-aria-hidden=\\"true\\" aria-hidden=\\"true\\">hidden</div><script></script></div><div>not-hidden</div></div></div>"`
+    );
+
+    unhide();
+  });
+
   it('works on IE11', () => {
     // Simulate IE11 DOM Node implementation.
     HTMLElement.prototype.contains = Node.prototype.contains;

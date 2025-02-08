@@ -168,8 +168,9 @@ export const hideOthers = (
     return () => null;
   }
 
-  // we should not hide ariaLive elements - https://github.com/theKashey/aria-hidden/issues/10
-  targets.push(...Array.from(activeParentNode.querySelectorAll('[aria-live]')));
+  // we should not hide aria-live elements - https://github.com/theKashey/aria-hidden/issues/10
+  // and script elements, as they have no impact on accessibility.
+  targets.push(...Array.from(activeParentNode.querySelectorAll('[aria-live], script')));
 
   return applyAttributeToOthers(targets, activeParentNode, markerName, 'aria-hidden');
 };
