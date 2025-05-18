@@ -13,8 +13,8 @@
     "release": "yarn build && yarn test",
     "lint": "lib-builder lint",
     "format": "lib-builder format",
-    "size": "npx size-limit",
-    "size:report": "npx size-limit --json > .size.json",
+    "size": "size-limit",
+    "size:report": "size-limit --json > .size.json",
     "update": "lib-builder update",
     "prepublish-only": "yarn build && yarn changelog",
     "prepare": "husky install",
@@ -24,8 +24,8 @@
   "author": "Anton Korzunov <thekashey@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@theuiteam/lib-builder": "^0.2.1",
-    "@size-limit/preset-small-lib": "^2.1.6"
+    "@theuiteam/lib-builder": "^1.0.0",
+    "@size-limit/preset-small-lib": "^11.1.6"
   },
   "engines": {
     "node": ">=10"
@@ -48,6 +48,7 @@
     "url": "git+https://github.com/theKashey/aria-hidden.git"
   },
   "dependencies": {
+    "caniuse-lite": "^1.0.30001718",
     "tslib": "^2.0.0"
   },
   "module:es2019": "dist/es2019/index.js",
@@ -66,5 +67,6 @@
     "tabWidth": 2,
     "semi": true,
     "singleQuote": true
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
