@@ -48,7 +48,6 @@
     "url": "git+https://github.com/theKashey/aria-hidden.git"
   },
   "dependencies": {
-    "caniuse-lite": "^1.0.30001718",
     "tslib": "^2.0.0"
   },
   "module:es2019": "dist/es2019/index.js",
